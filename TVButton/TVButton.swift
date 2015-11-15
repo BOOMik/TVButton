@@ -50,20 +50,28 @@ public class TVButton: UIButton, UIGestureRecognizerDelegate {
                 subview.removeFromSuperview()
             }
             // Instantiate an imageview with corners for every layer
-            for layer in layers! {
-                let imageView = UIImageView(image: layer.internalImage)
-                imageView.layer.cornerRadius = cornerRadius
-                imageView.clipsToBounds = true
-                imageView.layer.needsDisplayOnBoundsChange = true
-                containerView.addSubview(imageView)
+            if (layers != nil && layers!.count > 0) {
+                for layer in layers! {
+                    let imageView = UIImageView(image: layer.internalImage)
+                    imageView.layer.cornerRadius = cornerRadius
+                    imageView.clipsToBounds = true
+                    imageView.layer.needsDisplayOnBoundsChange = true
+                    if saveAspect {
+                        imageView.contentMode = .ScaleAspectFill
+                    }
+                    containerView.addSubview(imageView)
+                }
+                // Add specular shine effect
+                let frameworkBundle = NSBundle(forClass: TVButton.self)
+                let specularViewPath = frameworkBundle.pathForResource("Specular", ofType: "png")
+                specularView.image = UIImage(contentsOfFile: specularViewPath!)
+                updateFrame()
+                self.containerView.addSubview(specularView)
             }
-            // Add specular shine effect
-            let frameworkBundle = NSBundle(forClass: TVButton.self)
-            let specularViewPath = frameworkBundle.pathForResource("Specular", ofType: "png")
-            specularView.image = UIImage(contentsOfFile:specularViewPath!)
-            self.containerView.addSubview(specularView)
         }
     }
+    /// True if need save image aspect
+    public var saveAspect: Bool = defaultSaveAspect
 
     /// Determines the intensity of the parallax depth effect. Default is 1.0.
     public var parallaxIntensity: CGFloat = defaultParallaxIntensity
@@ -100,9 +108,12 @@ public class TVButton: UIButton, UIGestureRecognizerDelegate {
         super.layoutSubviews()
         containerView.frame = self.bounds
         self.layer.masksToBounds = false;
-        let shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius)
-        self.layer.shadowPath = shadowPath.CGPath
-
+        if (containerView.subviews.count > 0) {
+            let shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius)
+            self.layer.shadowPath = shadowPath.CGPath
+        } else {
+            self.layer.shadowPath = nil
+        }
         // Stop here if animation is on
         if let animation = tvButtonAnimation {
             if animation.highlightMode == true {
@@ -119,6 +130,7 @@ public class TVButton: UIButton, UIGestureRecognizerDelegate {
                 subview.frame = CGRect(origin: subview.frame.origin, size: containerView.frame.size)
             }
         }
+        updateFrame()
     }
     
     /**
@@ -216,5 +228,50 @@ public class TVButton: UIButton, UIGestureRecognizerDelegate {
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
+
+
+    func getScaledSizeOfImage(image: UIImage, toSize: CGSize) -> CGSize
+    {
+        let widthRatio = toSize.width/image.size.width
+        let heightRatio = toSize.height/image.size.height
+        let scale = min(widthRatio, heightRatio)
+        let imageWidth = scale*image.size.width
+        let imageHeight = scale*image.size.height
+        return CGSizeMake(imageWidth, imageHeight)
+    }
+
+
+
+    public func updateFrame() {
+        if (saveAspect && layers != nil && layers!.count > 0) {
+            var newSize:CGSize = getScaledSizeOfImage(layers![0].internalImage!, toSize: self.frame.size)
+
+            var frame = self.frame
+
+            if let sv = self.superview {
+                if (sv.frame.width != 0 && sv.frame.height != 0 ) {
+                    newSize = getScaledSizeOfImage(layers![0].internalImage!, toSize: sv.frame.size)
+                    frame = sv.frame
+                }
+            }
+
+
+            var svframe = specularView.frame;
+            svframe.size = newSize
+            specularView.frame = svframe;
+
+
+            let x = (frame.width - newSize.width) / 2
+            let y = (frame.height - newSize.height) / 2
+
+            frame.origin.x = x
+            frame.origin.y = y
+
+            frame.size = newSize
+            self.frame = frame;
+            self.layoutIfNeeded()
+        }
+    }
+
+
 }

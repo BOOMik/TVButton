@@ -52,3 +52,6 @@ let specularScale: CGFloat = 2.0
 
 // The scale of the specular shine
 let specularAlpha: CGFloat = 0.25
+
+// If need save aspect
+let defaultSaveAspect : Bool = false
