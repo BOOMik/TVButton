@@ -31,6 +31,16 @@ You can customize the parallax intensity of your TVButton. Default value is 1.0 
 tvButton.parallaxIntensity = 1.3
 ```
 
+If you want to keep the image proportions
+```swift
+  tvButton.saveAspect= 1.3
+```
+
+For custom specular image set UIImage to 
+```swift
+  tvButton.customSpecularImage 
+```
+
 ![TVButton in action](http://i.giphy.com/l0O9zc8b49oDi209y.gif)
 
 Enjoy!
