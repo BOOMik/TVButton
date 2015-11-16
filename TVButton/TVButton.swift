@@ -62,14 +62,20 @@ public class TVButton: UIButton, UIGestureRecognizerDelegate {
                     containerView.addSubview(imageView)
                 }
                 // Add specular shine effect
-                let frameworkBundle = NSBundle(forClass: TVButton.self)
-                let specularViewPath = frameworkBundle.pathForResource("Specular", ofType: "png")
-                specularView.image = UIImage(contentsOfFile: specularViewPath!)
+                if let specularImage = customSpecularImage {
+                    specularView.image = specularImage
+                } else {
+                    let frameworkBundle = NSBundle(forClass: TVButton.self)
+                    let specularViewPath = frameworkBundle.pathForResource("Specular", ofType: "png")
+                    specularView.image = UIImage(contentsOfFile: specularViewPath!)
+                }
                 updateFrame()
                 self.containerView.addSubview(specularView)
             }
         }
     }
+    /// True if need save image aspect
+    public var customSpecularImage: UIImage?
     /// True if need save image aspect
     public var saveAspect: Bool = defaultSaveAspect
 
