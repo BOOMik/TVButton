@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description      = <<-DESC
-                        Recreating the cool parallax icons from Apple TV as iOS UIButtons (in Swift). Fork.
+                        Recreating the cool parallax icons from Apple TV as iOS UIButtons (in Swift).
                        DESC
 
   s.homepage         = "https://github.com/marmelroy/TVButton"
@@ -35,4 +35,4 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.dependency 'AFNetworking', '~> 2.3'
-end
+end 
