@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "TVButton Fork"
+  s.name             = "TVButton BOOMik Fork"
   s.version          = "0.1.6"
   s.summary          = "Apple TV style parallax icons as iOS UIButtons"
 
