@@ -33,7 +33,7 @@ tvButton.parallaxIntensity = 1.3
 
 If you want to keep the image proportions
 ```swift
-  tvButton.saveAspect= 1.3
+  tvButton.saveAspect= true
 ```
 
 For custom specular image set UIImage to 
