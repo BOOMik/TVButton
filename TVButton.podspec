@@ -7,8 +7,8 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "TVButton"
-  s.version          = "0.1.5"
+  s.name             = "TVButton Fork"
+  s.version          = "0.1.6"
   s.summary          = "Apple TV style parallax icons as iOS UIButtons"
 
 # This description is used to generate tags and improve search results.
@@ -17,14 +17,14 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description      = <<-DESC
-                        Recreating the cool parallax icons from Apple TV as iOS UIButtons (in Swift).
+                        Recreating the cool parallax icons from Apple TV as iOS UIButtons (in Swift). Fork.
                        DESC
 
   s.homepage         = "https://github.com/marmelroy/TVButton"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Roy Marmelstein" => "marmelroy@gmail.com" }
-  s.source           = { :git => "https://github.com/marmelroy/TVButton.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/BOOMik/TVButton.git", :tag => s.version.to_s }
   s.social_media_url   = "http://twitter.com/marmelroy"
 
   s.platform     = :ios, '8.0'
