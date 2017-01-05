@@ -49,6 +49,8 @@ open class TVButton: UIButton, UIGestureRecognizerDelegate {
             for subview in containerView.subviews {
                 subview.removeFromSuperview()
             }
+            
+            
             // Instantiate an imageview with corners for every layer
             if (layers != nil && layers!.count > 0) {
                 for layer in layers! {
